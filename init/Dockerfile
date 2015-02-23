@@ -7,8 +7,11 @@ USER root
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r postgres -g 1000 && useradd -u 1000 -r -g postgres postgres
 
-#update susyem
+#update system
 RUN yum -y update && yum clean all
+
+# set Moscow tim zone
+RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
 
 # install server
 RUN yum -y install sudo psmisc postgresql-server postgresql-contrib postgresql && yum clean all
